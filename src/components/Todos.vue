@@ -12,6 +12,7 @@
                     <div class="view">
                         <input type="checkbox" v-model="todo.completed" class="toggle">
                         <label>{{ todo.name }}</label>
+                        <button class="destroy" @click.prevent="deleteTodo(todo)"></button>
                     </div>
                 </li>
             </ul>
@@ -46,6 +47,13 @@
                     name: this.newTodo,
                 })
                 this.newTodo = ''
+            },
+            deleteTodo(todoToDelete) {
+                // const index = this.todos.indexOf(todoToDelete)
+                // if (index !== -1) {
+                //     this.todos.splice(index, 1)
+                // }
+                this.todos = this.todos.filter(todo => todo !== todoToDelete)
             },
         },
         computed: {
