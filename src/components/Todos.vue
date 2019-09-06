@@ -11,10 +11,10 @@
                 <li class="todo" v-for="todo in filteredTodos" :class="{completed: todo.completed}">
                     <div class="view">
                         <input type="checkbox" v-model="todo.completed" class="toggle">
-                        <label>{{ todo.name }}</label>
+                        <label  @dblclick.prevent="editTodo(todo)">{{ todo.name }}</label>
                         <button class="destroy" @click.prevent="deleteTodo(todo)"></button>
                     </div>
-<!--                    <input type="text" @click="editTodo">-->
+                    <input type="text" class="edit" v-model="todo.name">
                 </li>
             </ul>
         </div>
@@ -59,6 +59,9 @@
             },
             deleteDone () {
                 return this.todos = this.todos.filter(todo => !todo.completed)
+            },
+            editTodo() {
+
             }
         },
         computed: {
@@ -93,6 +96,9 @@
             },
             buttonDeleteDone() {
                 return this.todos.filter(todo => todo.completed).length // 0 is a falsy value so it's return false if there 0 completed task
+            },
+            editTask() {
+
             }
         }
     }
