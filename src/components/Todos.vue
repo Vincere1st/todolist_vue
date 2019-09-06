@@ -14,16 +14,18 @@
                         <label>{{ todo.name }}</label>
                         <button class="destroy" @click.prevent="deleteTodo(todo)"></button>
                     </div>
+<!--                    <input type="text" @click="editTodo">-->
                 </li>
             </ul>
         </div>
-        <footer class="footer">
+        <footer class="footer" v-show="hasTodos">
             <span class="todo-count"><strong>{{ remaining }}</strong>Tâche à faire</span>
             <ul class="filters">
                 <li><a href="#" :class="{selected: filter === 'all'}" @click.prevent="filter = 'all'">Toutes</a></li>
                 <li><a href="#" :class="{selected: filter === 'todo'}" @click.prevent="filter = 'todo'">A faire</a></li>
                 <li><a href="#" :class="{selected: filter === 'done'}" @click.prevent="filter = 'done'">Faites</a></li>
             </ul>
+            <button class="clear-completed" v-show="buttonDeleteDone" @click.prevent="deleteDone()">Supprimer les tâches finis</button>
         </footer>
     </section>
 </template>
@@ -55,6 +57,9 @@
                 // }
                 this.todos = this.todos.filter(todo => todo !== todoToDelete)
             },
+            deleteDone () {
+                return this.todos = this.todos.filter(todo => !todo.completed)
+            }
         },
         computed: {
             allDone: {
@@ -82,6 +87,12 @@
                     return this.todos.filter(todo => todo.completed)
                 }
                 return this.todos
+            },
+            hasTodos() {
+                return this.todos.length > 0
+            },
+            buttonDeleteDone() {
+                return this.todos.filter(todo => todo.completed).length // 0 is a falsy value so it's return false if there 0 completed task
             }
         }
     }
